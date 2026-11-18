@@ -4,11 +4,11 @@
 
 1. Predict the median bone age from the training split for every image.
 2. Use pretrained ResNet-18 features with a small regression head.
-3. Use a pretrained Vision Transformer with a regression head. The specific variant depends on the free GPU budget.
+3. Use pretrained ViT-B/16 features with a small regression head.
 
 Start with frozen backbones and train only the new heads. Treat any later fine-tuning as a separate experiment. The two image models will use images alone. Use the same split, input resolution, and whole-hand framing for both, with any normalization differences from the pretrained weights recorded.
 
-The first ResNet-18 run uses the ImageNet V1 weights in evaluation mode so the backbone's batch normalization statistics stay fixed. Its linear head starts at the training median. The defaults are five epochs, batch size 32, Adam with learning rate 0.01, and seed 42. Select the head with the lowest development MAE. The run report records the actual settings and hashes of the labels and split files.
+Both backbones use their ImageNet V1 weights in evaluation mode. Each linear head starts at the training median. The defaults are five epochs, batch size 32, Adam with learning rate 0.01, and seed 42. A separate seeded generator gives both models the same image order for matching run settings. Select the head with the lowest development MAE. The run report records the actual settings, time per epoch including development scoring, and hashes of the labels and split files.
 
 ## How we will measure it
 

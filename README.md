@@ -9,7 +9,8 @@ Athena is a computer vision study that estimates bone age in months from pediatr
 - [x] Build the shared image loader and preprocessing.
 - [x] Add the ResNet-18 training script and verify it with generated images.
 - [ ] Run the ResNet-18 benchmark on the RSNA images.
-- [ ] Train a Vision Transformer on the same split.
+- [x] Add the Vision Transformer training script.
+- [ ] Run the Vision Transformer benchmark on the same RSNA split.
 - [ ] Compare results and document where the models struggle.
 
 ## Inspect the data
@@ -58,5 +59,13 @@ python -m scripts.train_resnet data/raw/rsna-training-labels/train.csv data/raw/
 ```
 
 The head starts by predicting the training median. Training adjusts only the head, using absolute error in months. The script prints the development MAE after each epoch and saves the best head and `run.json` in `artifacts/resnet18/`. Use `--out artifacts/resnet18-run2` for a separate run. Keep the Torchvision ImageNet weights available alongside the head when loading it later.
+
+## Train the Vision Transformer head
+
+```sh
+python -m scripts.train_vit data/raw/rsna-training-labels/train.csv data/raw/boneage-training-dataset
+```
+
+This uses [ViT-B/16 with ImageNet V1 weights](https://docs.pytorch.org/vision/stable/models/generated/torchvision.models.vit_b_16.html) and saves the output to `artifacts/vit_b_16/`. Both scripts use the same preprocessing, split, batch order and scoring code when run with the same settings. If the transformer runs out of GPU memory, lower `--batch-size` for both official comparison runs.
 
 See the [benchmark plan](docs/benchmark-plan.md) for the comparison and the [data card](docs/data-card.md) for RSNA attribution and usage terms.
