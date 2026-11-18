@@ -76,4 +76,14 @@ This uses [ViT-B/16 with ImageNet V1 weights](https://docs.pytorch.org/vision/st
 
 The notebook starts with batch size 8 for both models. Save the two output ZIPs before ending the session. Each includes a regression head and a report with development MAE and timing. A free Colab GPU is subject to [availability and session limits](https://research.google.com/colaboratory/faq.html).
 
+## Evaluate the final holdout
+
+Download the validation archive from the [RSNA challenge page](https://www.rsna.org/artificial-intelligence/ai-image-challenge/rsna-pediatric-bone-age-challenge-2017). Keep the original training image ZIP alongside it. From the repository root, run:
+
+```sh
+python -m scripts.evaluate_holdout data/raw/train.csv data/raw/images.zip data/raw/holdout.zip artifacts/rsna-dev-b8
+```
+
+Use the original training CSV and saved split from the two runs. The evaluator checks their hashes, verifies that the archives share neither image IDs nor identical PNG files, and reports MAE overall and by age band and recorded sex. It saves aggregate results to `artifacts/holdout.json`.
+
 See the [benchmark plan](docs/benchmark-plan.md) for the comparison and the [data card](docs/data-card.md) for RSNA attribution and usage terms.
