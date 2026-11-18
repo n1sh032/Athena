@@ -68,4 +68,10 @@ python -m scripts.train_vit data/raw/rsna-training-labels/train.csv data/raw/bon
 
 This uses [ViT-B/16 with ImageNet V1 weights](https://docs.pytorch.org/vision/stable/models/generated/torchvision.models.vit_b_16.html) and saves the output to `artifacts/vit_b_16/`. Both scripts use the same preprocessing, split, batch order and scoring code when run with the same settings. If the transformer runs out of GPU memory, lower `--batch-size` for both official comparison runs.
 
+## Run the benchmark on a cloud GPU
+
+[Open the benchmark in Colab](https://colab.research.google.com/github/n1sh032/Athena/blob/main/notebooks/rsna_benchmark.ipynb) and select a GPU runtime. The notebook downloads the official RSNA training data, checks the images, recreates the seed 42 split, and runs both models. Allow around 20 GB for the archive and extracted images, plus room for model weights and outputs.
+
+The notebook starts with batch size 8 for both models. Save the two output ZIPs before ending the session. Each includes a regression head and a report with development MAE and timing. A free Colab GPU is subject to [availability and session limits](https://research.google.com/colaboratory/faq.html).
+
 See the [benchmark plan](docs/benchmark-plan.md) for the comparison and the [data card](docs/data-card.md) for RSNA attribution and usage terms.
