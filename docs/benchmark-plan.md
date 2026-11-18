@@ -14,6 +14,8 @@ Set aside development examples from the RSNA training download. Use those to cho
 
 The baseline sorts the training download's image IDs and shuffles them with seed 42. It sets aside 20% rounded down for development and uses the rest for training. The annotations identify images, so this is an image-level split. Keep the saved IDs in `artifacts/median-baseline.json` for reuse when training both image models.
 
+The shared loader resizes each grayscale X-ray to fit inside 224 × 224 pixels and fills the remaining space with black padding. This preserves the image's proportions and keeps the edges in view. It copies grayscale into three channels and applies the ImageNet channel normalization used by the [ResNet-18](https://docs.pytorch.org/vision/stable/models/generated/torchvision.models.resnet18.html) and [ViT-B/16](https://docs.pytorch.org/vision/stable/models/generated/torchvision.models.vit_b_16.html) ImageNet weights. This project uses padding in place of their default center crop.
+
 Mean absolute error (MAE) in months is the main score. For instance, a prediction of 130 months against a reference of 124 has an absolute error of 6 months. Report each method's MAE on the same holdout, counts and MAE by age band and recorded sex, plus training time and hardware for the image models. Keep preprocessing settings, software versions, and checkpoints with the experiment records.
 
 The result measures agreement with the reference labels on this dataset. Generalization to other hospitals and clinical use would require separate evaluation.

@@ -6,7 +6,7 @@ Athena is a computer vision study that estimates bone age in months from pediatr
 
 - [x] Check the training labels and their matching image files.
 - [x] Add the median age baseline and a saved development split.
-- [ ] Build the shared image loader and preprocessing.
+- [x] Build the shared image loader and preprocessing.
 - [ ] Train ResNet-18 and a Vision Transformer.
 - [ ] Compare results and document where the models struggle.
 
@@ -33,5 +33,18 @@ python scripts/baseline.py data/raw/rsna-training-labels/train.csv
 The command prints the development mean absolute error in months and saves the exact split and score to `artifacts/median-baseline.json`. Use that split for both image models.
 
 With seed 42, the 10,089 training labels give a median of 132 months. Predicting 132 months for each of the 2,522 development examples gives a **development MAE of 33.33 months**. The final holdout is reserved for the model comparison.
+
+## Check the image batches
+
+After extracting the training images and running the baseline, install the image dependencies and run:
+
+```sh
+python -m pip install -r requirements.txt
+python -m scripts.image_data data/raw/rsna-training-labels/train.csv data/raw/boneage-training-dataset
+```
+
+The loader checks that the saved split covers the CSV exactly and that every expected PNG exists. It decodes the first batch in each split and prints the image shape and the corresponding ages. Each batch has shape `(N, 3, 224, 224)`, where `N` is the number of images in the batch.
+
+Run `python -m unittest discover -s tests -v` to check the loader with generated PNGs.
 
 See the [benchmark plan](docs/benchmark-plan.md) for the comparison and the [data card](docs/data-card.md) for RSNA attribution and usage terms.
