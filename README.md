@@ -7,7 +7,9 @@ Athena is a computer vision study that estimates bone age in months from pediatr
 - [x] Check the training labels and their matching image files.
 - [x] Add the median age baseline and a saved development split.
 - [x] Build the shared image loader and preprocessing.
-- [ ] Train ResNet-18 and a Vision Transformer.
+- [x] Add the ResNet-18 training script and verify it with generated images.
+- [ ] Run the ResNet-18 benchmark on the RSNA images.
+- [ ] Train a Vision Transformer on the same split.
 - [ ] Compare results and document where the models struggle.
 
 ## Inspect the data
@@ -46,5 +48,15 @@ python -m scripts.image_data data/raw/rsna-training-labels/train.csv data/raw/bo
 The loader checks that the saved split covers the CSV exactly and that every expected PNG exists. It decodes the first batch in each split and prints the image shape and the corresponding ages. Each batch has shape `(N, 3, 224, 224)`, where `N` is the number of images in the batch.
 
 Run `python -m unittest discover -s tests -v` to check the loader with generated PNGs.
+
+## Train the ResNet-18 head
+
+Run from the repository root after checking the images and creating the baseline split. Start with a cloud notebook with a GPU for the full dataset. The first run fetches the [pretrained ResNet-18 weights](https://docs.pytorch.org/vision/stable/models/generated/torchvision.models.resnet18.html).
+
+```sh
+python -m scripts.train_resnet data/raw/rsna-training-labels/train.csv data/raw/boneage-training-dataset
+```
+
+The head starts by predicting the training median. Training adjusts only the head, using absolute error in months. The script prints the development MAE after each epoch and saves the best head and `run.json` in `artifacts/resnet18/`. Use `--out artifacts/resnet18-run2` for a separate run. Keep the Torchvision ImageNet weights available alongside the head when loading it later.
 
 See the [benchmark plan](docs/benchmark-plan.md) for the comparison and the [data card](docs/data-card.md) for RSNA attribution and usage terms.

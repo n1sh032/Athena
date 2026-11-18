@@ -8,6 +8,8 @@
 
 Start with frozen backbones and train only the new heads. Treat any later fine-tuning as a separate experiment. The two image models will use images alone. Use the same split, input resolution, and whole-hand framing for both, with any normalization differences from the pretrained weights recorded.
 
+The first ResNet-18 run uses the ImageNet V1 weights in evaluation mode so the backbone's batch normalization statistics stay fixed. Its linear head starts at the training median. The defaults are five epochs, batch size 32, Adam with learning rate 0.01, and seed 42. Select the head with the lowest development MAE. The run report records the actual settings and hashes of the labels and split files.
+
 ## How we will measure it
 
 Set aside development examples from the RSNA training download. Use those to choose settings and checkpoints. Plan to reserve RSNA's published validation download for Athena's final holdout, after checking its labels and overlap with the training download. If it cannot serve as the holdout, define and record a fixed internal test split before tuning. Use patient groups if identifiers are supplied. Report the split source, limitations, and seed.
