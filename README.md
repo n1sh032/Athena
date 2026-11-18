@@ -11,9 +11,11 @@ Athena is a computer vision study that estimates bone age in months from pediatr
 - [x] Run the ResNet-18 development benchmark on the RSNA images.
 - [x] Add the Vision Transformer training script.
 - [x] Run the Vision Transformer development benchmark on the same RSNA split.
-- [ ] Evaluate both models on the final holdout and document where they struggle.
+- [x] Evaluate both models on the final holdout and document where they struggle.
 
 On the development split, ViT-B/16 reached **17.15 months MAE**, ResNet-18 reached **19.16 months**, and the training-median baseline scored **33.33 months**. See the [development results](docs/development-results.md) for the settings and epoch timings.
+
+On the 1,425-image RSNA holdout, ViT-B/16 reached **16.86 months MAE**, compared with **19.40 months** for ResNet-18 and **33.40 months** for the median baseline. See the [holdout report](docs/holdout-results.md) for the subgroup breakdown.
 
 ## Inspect the data
 

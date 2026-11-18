@@ -18,4 +18,4 @@ ViT-B/16 reached **17.15 months MAE**, about **2.01 months lower** than ResNet-1
 
 Both models used 10,089 training images and 2,522 development images. The run reports matched on the label and split file hashes. Each run used frozen ImageNet V1 weights, a linear head, Adam at 0.01, batch size 8, and seed 42. Both ran on a Colab Tesla T4 with PyTorch `2.14.1+cu130` and Torchvision `0.29.1+cu130`.
 
-We used the development split to select each checkpoint. This is one matched run, and the official validation archive is still reserved for final holdout evaluation. Timing includes image loading and development scoring, so it describes this notebook run rather than model inference speed alone.
+We used the development split to select each checkpoint. See the [final holdout report](holdout-results.md) for the separate RSNA validation archive results. Timing includes image loading and development scoring, so it describes this notebook run rather than model inference speed alone.
