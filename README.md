@@ -88,4 +88,10 @@ python -m scripts.evaluate_holdout data/raw/train.csv data/raw/images.zip data/r
 
 Use the original training CSV and saved split from the two runs. The evaluator checks their hashes, verifies that the archives share neither image IDs nor identical PNG files, and reports MAE overall and by age band and recorded sex. It saves aggregate results to `artifacts/holdout.json`.
 
+## Explore a holdout case
+
+[Open the demo in Colab](https://colab.research.google.com/github/n1sh032/Athena/blob/main/notebooks/rsna_demo.ipynb). Run the cells with a CPU runtime or a GPU if you have one. Supply the two result ZIPs from the benchmark when prompted. The notebook shows one RSNA image with its reference age, both predictions, and their absolute errors. Change `image_id` in the last cell to inspect another case.
+
+The demo uses the official RSNA archive. Keep any notebook outputs with X-rays private.
+
 See the [benchmark plan](docs/benchmark-plan.md) for the comparison and the [data card](docs/data-card.md) for RSNA attribution and usage terms.
