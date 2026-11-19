@@ -2,6 +2,22 @@
 
 Athena is a computer vision study that estimates bone age in months from pediatric hand X-rays. The experiment asks whether a pretrained Vision Transformer improves on ResNet-18 when both see the same data. This project is for education and research.
 
+| Model | MAE on 1,425 RSNA holdout images |
+|---|---:|
+| Median baseline | 33.40 months |
+| ResNet-18 | 19.40 months |
+| **ViT-B/16** | **16.86 months** |
+
+[Holdout report](docs/holdout-results.md) · [Model card](docs/model-card.md) · [Colab demo](https://colab.research.google.com/github/n1sh032/Athena/blob/main/notebooks/rsna_demo.ipynb)
+
+```mermaid
+flowchart LR
+    A["Hand X-ray"] --> B["Resize and pad to 224 × 224"]
+    B --> C["Frozen ResNet-18 or ViT-B/16"]
+    C --> D["Linear regression head"]
+    D --> E["Bone age estimate in months"]
+```
+
 ## Project progress
 
 - [x] Check the training labels and their matching image files.
@@ -14,8 +30,6 @@ Athena is a computer vision study that estimates bone age in months from pediatr
 - [x] Evaluate both models on the final holdout and document where they struggle.
 
 On the development split, ViT-B/16 reached **17.15 months MAE**, ResNet-18 reached **19.16 months**, and the training-median baseline scored **33.33 months**. See the [development results](docs/development-results.md) for the settings and epoch timings.
-
-On the 1,425-image RSNA holdout, ViT-B/16 reached **16.86 months MAE**, compared with **19.40 months** for ResNet-18 and **33.40 months** for the median baseline. See the [holdout report](docs/holdout-results.md) for the subgroup breakdown.
 
 ## Inspect the data
 
